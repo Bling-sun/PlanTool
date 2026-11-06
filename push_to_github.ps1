@@ -21,7 +21,7 @@ try {
     if ($LASTEXITCODE -ne 0) { Invoke-PlanGit config user.name Bling-sun }
     & $gitExe --no-pager config user.email > $null
     if ($LASTEXITCODE -ne 0) { Invoke-PlanGit config user.email Bling-sun@users.noreply.github.com }
-    $codeFiles = @('.gitignore','README.md','USER_GUIDE.txt','PersonalPlan.cs','GlassPlanner.cs','BuildPersonalPlan.ps1','push_to_github.bat','push_to_github.ps1')
+    $codeFiles = @('.gitignore','README.md','USER_GUIDE.txt','PersonalPlan.cs','GlassPlanner.cs','BuildPersonalPlan.ps1','BuildIcon.ps1','Tools/BuildIcon.cs','Assets/PersonalPlan.svg','Assets/PersonalPlan.png','Assets/PersonalPlan-32.png','Assets/PersonalPlan.ico','push_to_github.bat','push_to_github.ps1')
     Invoke-PlanGit add -- @codeFiles
     Invoke-PlanGit diff --cached --check
     if ($Check) { Write-Host 'Code file selection and repository checks passed.'; exit 0 }

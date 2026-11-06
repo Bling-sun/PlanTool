@@ -48,6 +48,14 @@ powershell -ExecutionPolicy Bypass -File .\BuildPersonalPlan.ps1
 
 结果写入 `self-test.txt`。`GlassPlanner.cs` 是当前 WPF 界面，`PersonalPlan.cs` 包含共享数据、日期、AI、自检与旧版兼容代码。
 
+## 应用图标
+
+图标采用深蓝圆角底、青色计划页和勾选符号。`Assets/PersonalPlan.svg` 为矢量源文件，PNG 用于预览，ICO 包含 16–256 像素的 9 个尺寸。`BuildIcon.ps1` 可重新生成图标；程序、窗口、托盘和桌面快捷方式使用相同图标。
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\BuildIcon.ps1
+```
+
 ## 一键推送代码
 
 双击 `push_to_github.bat`，将指定源码、构建脚本与 README 提交并推送至 [Bling-sun/PlanTool](https://github.com/Bling-sun/PlanTool)。脚本只暂存固定文件列表，拒绝不匹配的 origin，不执行 force push，不会自动处理冲突。需要 Git、GitHub 写入权限及可用网络；首次使用可能需要 GitHub 登录。
