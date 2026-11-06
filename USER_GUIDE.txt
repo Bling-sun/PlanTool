@@ -1,0 +1,32 @@
+Personal Plan
+
+所有应用资料位于 D:\Personal Plan：
+• PersonalPlan.exe：程序
+• Data：当前计划、设置、AI 总结和加密 API key
+• Backups：迁移前备份
+• LegacyData：更早版本数据（如存在）
+• Previews：两种环境模式的设计预览（示例任务）
+• README.md：完整说明
+• PersonalPlan.cs / GlassPlanner.cs / BuildPersonalPlan.ps1：源码与构建脚本
+• push_to_github.bat：双击提交并推送指定源码到 Bling-sun/PlanTool
+
+窗口标题栏的「深环境 / 浅环境」可一键切换：
+• 深色环境：适合深色桌面或下层窗口，亮字、青色强调。
+• 浅色环境：适合浅色桌面或下层窗口，深蓝文字、深青强调。
+这里的“环境”指软件下面的桌面或窗口。两种模式都保留 80% 默认透明度。
+设置中可更改模式、透明度和配色，两种模式分别保存配色。
+
+按住标题拖动便签；「−」缩为迷你浮窗，双击浮窗展开；「×」隐藏到托盘。
+双击托盘显示便签，托盘右键退出。
+
+设置中填写 DeepSeek API key，点击测试 API 后保存。API key 不要发到聊天或 GitHub。
+生成 AI 总结时会发送对应周期的任务和备注至 DeepSeek，使用你自己的 API 余额。
+
+默认开机自启动。工作日 17:30 日复盘，周五 17:30 周复盘，月底最后工作日 17:30 月复盘。
+工作日默认周一至周五，可填写节假日和调休日期。关机、退出期间无法提醒。
+
+备份恢复前先彻底退出应用，再恢复 Data\planner.json。
+密钥绑定当前 Windows 用户，复制到其他电脑后需要重新填写。
+
+GitHub 脚本只上传固定源码文件列表，不上传 Data、Backups、LegacyData、Previews、EXE 或测试报告。
+首次使用可能需要 GitHub 登录；冲突或网络错误时脚本停止，不会强制覆盖远程。
