@@ -1,5 +1,5 @@
 @echo off
-setlocal
+setlocal EnableDelayedExpansion
 chcp 65001 >nul
 cd /d "%~dp0"
 where git >nul 2>nul
@@ -15,11 +15,14 @@ if errorlevel 1 (
   if errorlevel 1 goto failed
   git remote add origin https://github.com/Bling-sun/PlanTool.git
 )
-git remote get-url origin 2>nul | findstr /x /c:"https://github.com/Bling-sun/PlanTool.git" /c:"https://github.com/Bling-sun/PlanTool" /c:"git@github.com:Bling-sun/PlanTool.git" >nul
-if errorlevel 1 (
-  echo Unexpected origin URL. Expected Bling-sun/PlanTool. No files were uploaded.
-  goto failed
-)
+set "PLAN_REMOTE="
+for /f "delims=" %%R in ('git remote get-url origin 2^>nul') do set "PLAN_REMOTE=%%R"
+if /i "!PLAN_REMOTE!"=="https://github.com/Bling-sun/PlanTool.git" goto origin_ok
+if /i "!PLAN_REMOTE!"=="https://github.com/Bling-sun/PlanTool" goto origin_ok
+if /i "!PLAN_REMOTE!"=="git@github.com:Bling-sun/PlanTool.git" goto origin_ok
+echo Unexpected origin URL. Expected Bling-sun/PlanTool. No files were uploaded.
+goto failed
+:origin_ok
 git config user.name >nul 2>nul
 if errorlevel 1 git config user.name Bling-sun
 git config user.email >nul 2>nul
