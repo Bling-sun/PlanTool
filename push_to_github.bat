@@ -3,6 +3,8 @@ setlocal
 chcp 65001 >nul
 cd /d "%~dp0"
 where git >nul 2>nul
+if errorlevel 1 if exist "%USERPROFILE%\.cache\codex-runtimes\codex-primary-runtime\dependencies\native\git\cmd\git.exe" set "PATH=%USERPROFILE%\.cache\codex-runtimes\codex-primary-runtime\dependencies\native\git\cmd;%PATH%"
+where git >nul 2>nul
 if errorlevel 1 (
   echo Git was not found. Install Git for Windows, then retry.
   goto failed
@@ -24,6 +26,12 @@ git config user.email >nul 2>nul
 if errorlevel 1 git config user.email Bling-sun@users.noreply.github.com
 git add -- .gitignore README.md USER_GUIDE.txt PersonalPlan.cs GlassPlanner.cs BuildPersonalPlan.ps1 push_to_github.bat
 if errorlevel 1 goto failed
+if /i "%~1"=="--check" (
+  git diff --cached --check
+  if errorlevel 1 exit /b 1
+  echo Code file selection and repository checks passed.
+  exit /b 0
+)
 git diff --cached --quiet -- .gitignore README.md USER_GUIDE.txt PersonalPlan.cs GlassPlanner.cs BuildPersonalPlan.ps1 push_to_github.bat
 if errorlevel 1 (
   git commit --only -m "Update Personal Plan" -- .gitignore README.md USER_GUIDE.txt PersonalPlan.cs GlassPlanner.cs BuildPersonalPlan.ps1 push_to_github.bat
@@ -44,4 +52,3 @@ echo Upload failed. Check GitHub sign-in, repository access and network/proxy se
 echo No force push or automatic conflict resolution was performed.
 pause
 exit /b 1
-

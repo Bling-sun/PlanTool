@@ -420,5 +420,3 @@ namespace DeskPlanner {
   }
  }
 }
-
-

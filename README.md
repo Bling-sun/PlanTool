@@ -53,4 +53,3 @@ powershell -ExecutionPolicy Bypass -File .\BuildPersonalPlan.ps1
 双击 `push_to_github.bat`，将指定源码、构建脚本与 README 提交并推送至 [Bling-sun/PlanTool](https://github.com/Bling-sun/PlanTool)。脚本只暂存固定文件列表，拒绝不匹配的 origin，不执行 force push，不会自动处理冲突。需要 Git、GitHub 写入权限及可用网络；首次使用可能需要 GitHub 登录。
 
 代理设置为本机仓库的 Git 配置，不写入源码或脚本。换电脑或代理端口变化时，可用 `git config http.proxy ...` 更新，或用 `git config --unset http.proxy` 移除。
-
