@@ -5,7 +5,7 @@ $nativeGit = Join-Path $env:USERPROFILE '.cache\codex-runtimes\codex-primary-run
 if (Test-Path -LiteralPath $nativeGit) { $gitExe = $nativeGit } else { $gitExe = (Get-Command git -ErrorAction Stop).Source }
 function Invoke-PlanGit {
     param([Parameter(ValueFromRemainingArguments = $true)][string[]]$GitArguments)
-    & $gitExe @GitArguments
+    & $gitExe --no-pager @GitArguments
     if ($LASTEXITCODE -ne 0) { throw "Git failed (exit $LASTEXITCODE)." }
 }
 try {
@@ -13,19 +13,19 @@ try {
         Invoke-PlanGit init -b main
         Invoke-PlanGit remote add origin https://github.com/Bling-sun/PlanTool.git
     }
-    $origin = (& $gitExe remote get-url origin | Out-String).Trim()
+    $origin = (& $gitExe --no-pager remote get-url origin | Out-String).Trim()
     if ($LASTEXITCODE -ne 0 -or $origin -notin @('https://github.com/Bling-sun/PlanTool.git','https://github.com/Bling-sun/PlanTool','git@github.com:Bling-sun/PlanTool.git')) {
         throw 'Unexpected origin. Expected Bling-sun/PlanTool. Nothing was uploaded.'
     }
-    & $gitExe config user.name > $null
+    & $gitExe --no-pager config user.name > $null
     if ($LASTEXITCODE -ne 0) { Invoke-PlanGit config user.name Bling-sun }
-    & $gitExe config user.email > $null
+    & $gitExe --no-pager config user.email > $null
     if ($LASTEXITCODE -ne 0) { Invoke-PlanGit config user.email Bling-sun@users.noreply.github.com }
     $codeFiles = @('.gitignore','README.md','USER_GUIDE.txt','PersonalPlan.cs','GlassPlanner.cs','BuildPersonalPlan.ps1','push_to_github.bat','push_to_github.ps1')
     Invoke-PlanGit add -- @codeFiles
     Invoke-PlanGit diff --cached --check
     if ($Check) { Write-Host 'Code file selection and repository checks passed.'; exit 0 }
-    & $gitExe diff --cached --quiet -- @codeFiles
+    & $gitExe --no-pager diff --cached --quiet -- @codeFiles
     $diffExit = $LASTEXITCODE
     if ($diffExit -eq 1) { Invoke-PlanGit -c maintenance.auto=false commit --only -m 'Update Personal Plan' -- @codeFiles }
     elseif ($diffExit -eq 0) { Write-Host 'No code changes to commit.' }
